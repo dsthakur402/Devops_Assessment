@@ -11,17 +11,23 @@ This project demonstrates the process of containerizing a full-stack application
 - A Docker Hub account (to push the images).
 
 ### **Steps to Run the Application**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/dsthakur402/Devops_Assessment
-   cd Devops-Assessment
-   ```
-### **Verify that the containers are running:**
+### **1. Clone the repository:**
+```bash
+git clone https://github.com/dsthakur402/Devops_Assessment
+cd Devops-Assessment
+```
+
+### **2. Run the `deploy.sh` script to automate the build and deployment:**
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+### **3. Verify that the containers are running:**
 ```bash
 docker ps
 ```
 
-### **Access the application:**
+### **4. Access the application:**
 - **Frontend**: [http://localhost:3001](http://localhost:3001)  
 - **Backend APIs**: [http://localhost:5000](http://localhost:5000)
 
