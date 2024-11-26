@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+app.get('/', (req, res) => {
+    res.send('Backend is running!');
+});
+
 // API Endpoints
 app.get('/api/users', async (req, res) => {
     const users = await User.find();
