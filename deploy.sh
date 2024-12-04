@@ -3,7 +3,7 @@
 # Variables
 FRONTEND_VERSION="v1.0.0"
 BACKEND_VERSION="v1.0.0"
-DOCKERHUB_USERNAME="vipraksh01"
+DOCKERHUB_USERNAME="dsthakur402"
 DOCKERHUB_PASSWORD=""  
 
 # Step 1: Authenticate with Docker Hub
