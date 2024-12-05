@@ -4,7 +4,13 @@
 FRONTEND_VERSION="v1.0.0"
 BACKEND_VERSION="v1.0.0"
 DOCKERHUB_USERNAME="dsthakur402"
-DOCKERHUB_PASSWORD=""  
+DOCKERHUB_PASSWORD=${{ secrets.PASSWORD }}
+
+# Ensure secrets are accessible
+if [[ -z "$DOCKERHUB_USERNAME" || -z "$DOCKERHUB_PASSWORD" ]]; then
+    echo "Error: Docker Hub username or password secrets are not set."
+    exit 1
+fi
 
 # Step 1: Authenticate with Docker Hub
 echo "Authenticating with Docker Hub..."
@@ -46,8 +52,19 @@ fi
 echo "Updating docker-compose.yml with new image versions..."
 sed -i "s|frontend:.*|frontend: $DOCKERHUB_USERNAME/frontend:$FRONTEND_VERSION|" docker-compose.yml
 sed -i "s|backend:.*|backend: $DOCKERHUB_USERNAME/backend:$BACKEND_VERSION|" docker-compose.yml
+if [ $? -ne 0 ]; then
+    echo "Error updating docker-compose.yml."
+    exit 1
+fi
 
-# Step 5: Run Docker Compose to start the application
+# Step 5: Pull updated images and run Docker Compose to start the application
+echo "Pulling updated Docker images..."
+docker-compose pull
+if [ $? -ne 0 ]; then
+    echo "Error pulling updated Docker images."
+    exit 1
+fi
+
 echo "Running Docker Compose to start the application..."
 docker-compose up --build -d
 if [ $? -ne 0 ]; then
@@ -58,5 +75,9 @@ fi
 # Step 6: Optional cleanup of old images (if necessary)
 echo "Cleaning up old Docker images..."
 docker image prune -f
+if [ $? -ne 0 ]; then
+    echo "Error during image cleanup."
+    exit 1
+fi
 
 echo "Deployment complete!"
